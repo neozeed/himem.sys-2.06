@@ -1,0 +1,162 @@
+_____________________________________________________________________
+
+HIMEM.SYS
+
+HIMEM.SYS is an installable device driver which conforms to the XMS 
+(eXxtended Memory Specification) Version 2.0. It allows MS-DOS
+programs on 80286 and 80386 systems with extended memory to access
+the extended memory using a standard, machine independent manner. It
+also allows MS-DOS programs to utilize a 64KB region of memory located
+just above the 1MB boundary for code and data. Microsoft Windows
+currently makes use of this area.
+
+If you have an expanded memory (EMS, not XMS) board, you can usually
+configure the board so that some part of the memory is allocated to
+extended memory (64K would be optimal), leaving the rest as expanded.
+
+If other extended memory programs are also being loaded which do not
+use the XMS interface to manage the extended memory, they should be
+configured to leave at least 64KB of extended memory free.
+
+To obtain the latest version of HIMEM.SYS, or receive a copy of the
+XMS specification, contact Microsoft at (800) 426-9400.
+
+
+USING HIMEM.SYS:
+________________
+
+To use HIMEM.SYS, with your computer, you need the following:
+
+    o An IBM PC/AT or PS/2 or compatible computer.
+    o An extended memory board.
+
+
+INSTALLING HIMEM.SYS:
+_____________________
+
+To install HIMEM.SYS, include a command line of the following form in
+your CONFIG.SYS file:
+
+    DEVICE=[d:][path]HIMEM.SYS [/HMAMIN=h] [/NUMHANDLES=n]
+
+During installation, a message similar to the following will be
+displayed:
+
+    HIMEM: DOS XMS Driver, Version 2.02 - 7/19/88
+    Copyright 1988, Microsoft Corp.
+
+HIMEM.SYS must be installed before any other device drivers that make
+calls to it. Thus, any device driver which uses XMS calls should be
+loaded after HIMEM.SYS.
+
+
+THE HIMEM.SYS OPTIONS:
+______________________
+
+Option         Function
+_____________________________________________________________________
+
+/HMAMIN=h      This sets the minimum amount of space (in kilobytes) in
+               the High Memory Area (HMA) that a program can use. 
+               Programs which use less space than this number will not 
+               be placed in the HMA. This number becomes important 
+               when two TSRs which use the HMA are installed. Setting 
+               this number to the request size of the largest 
+               HMA-using TSR ensures maximum benefit of this area of 
+               memory. The minimum value is 0 and the maximum is 63, 
+               with a default of 0. The 0 default allows "First come, 
+               first served" access to the HMA. When this option is 
+               used, this message will be displayed:
+
+                   Minimum HMA size set to h
+
+/NUMHANDLES=n  For advanced users only: this sets the maximum number 
+               of Extended Memory Block (EMB) handles that can be used 
+               at any given time. The minimum is 1 and the maximum is 
+               128, with a default is 32. Each additional handle 
+               requires an additional 6 bytes of resident memory. When 
+               this option is used, this message will be displayed:
+
+                   n extended memory handles available.
+
+EXAMPLES:
+_________
+
+
+The following command line shows the normal configuration of HIMEM.SYS:
+
+    DEVICE=HIMEM.SYS
+
+The following command line shows a configuration of HIMEM.SYS which 
+ensures that any program using the High Memory Area must use at least
+40KB of this memory:
+
+    DEVICE=HIMEM.SYS /HMAMIN=40
+
+The following command line shows a configuration of HIMEM.SYS which
+uses the maximum number of Extended Memory Block handles:
+
+    DEVICE=HIMEM.SYS /NUMHANDLES=128
+
+
+ERRORS AND WARNINGS:
+____________________
+
+The following are error messages which are displayed when HIMEM 
+cannot properly install itself.
+
+    64K High Memory Area is available.
+
+HIMEM has properly installed itself in the system (no errors).
+
+
+    ERROR: HIMEM.SYS requires DOS 3.00 or higher.
+           XMS Driver not installed.
+
+HIMEM can only be used on systems with MS-DOS Version 3.00 or
+higher.
+
+
+    ERROR: HIMEM.SYS requires an 80x86-based machine.
+           XMS Driver not installed.
+
+HIMEM can only be installed on a computer system which has an 80286
+or 80386 microprocessor.
+
+
+    ERROR: An Extended Memory Manager is already installed.
+           XMS Driver not installed.
+
+HIMEM can only be installed once. Installing it more than one time 
+will result in an error for the second and subsequent installations.
+
+
+    ERROR: No available extended memory was found.
+
+HIMEM can only be installed on a computer with extended memory.
+
+
+    ERROR: Unrecognized A20 hardware.
+
+HIMEM cannot recognize the A20 hardware of your system. If this
+occurs, it is probably because the system is not one supported by
+this release of HIMEM. Contact your OEM to see if an XMS driver
+exists for your machine.
+
+
+    WARNING: The High Memory Area is unavailable.
+
+HIMEM cannot find enough memory to use the High Memory Area. HIMEM
+will not be able to process any requests for the High Memory Area.
+However, HIMEM will remain installed to process any requests for the
+Extended Memory Data Blocks.
+
+    WARNING: The A20 Line was already enabled.
+
+HIMEM detected the A20 hardware already enabled when it was
+installing, which is an abnormal condition. It is most commonly 
+caused by another program which is controlling the A20 line in an
+ill-behaved manner. HIMEM will remain installed and attempt to work 
+properly, however it will never disable the A20 line.
+
+_____________________________________________________________________

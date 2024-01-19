@@ -1,0 +1,221 @@
+
+	XMS Driver C Interface Routine Definitions
+
+	Copyright (c) 1988, Microsoft Corporation
+ 
+
+All the following routines are currently available SMALL MODEL ONLY.
+The object code is contained in the library, XMM.LIB, XMSERROR()
+is a macro contained in XMM.H.
+
+--------------------------------------------------------------------------------
+
+unsigned	XMM_Installed();
+
+	THIS ROUTINE MUST BE CALLED BEFORE ANY OTHER ROUTINE
+	OR ALL THE OTHER ROUTINES WILL FAIL WITH ERROR CODE 0x80
+
+Returns:	1 if an XMM driver was found
+		0 if no driver was found
+
+--------------------------------------------------------------------------------
+
+long	XMM_Version();
+
+Returns:	32 bit version, XMS version number in the low 16 bits,
+		Driver internal revision in the high 16 bits
+
+--------------------------------------------------------------------------------
+
+long	XMM_RequestHMA(Space_Needed);
+unsigned Space_Needed;
+
+Parameters:	Space_Needed is the number of Kb of the high memory area
+		which will be used (see the XMS)
+
+Returns:	0L	Success
+		< 0	Error code in top 8 bits
+
+--------------------------------------------------------------------------------
+
+long	XMM_ReleaseHMA();
+
+Returns:	0L	Success
+		< 0	Error code in top 8 bits
+
+--------------------------------------------------------------------------------
+
+long	XMM_GlobalEnableA20();
+
+Returns:	0L	Success
+		< 0	Error code in top 8 bits
+
+--------------------------------------------------------------------------------
+
+long	XMM_GlobalDisableA20();
+
+Returns:	0L	Success
+		< 0	Error code in top 8 bits
+
+--------------------------------------------------------------------------------
+
+long	XMM_EnableA20();
+
+Returns:	0L	Success
+		< 0	Error code in top 8 bits
+
+--------------------------------------------------------------------------------
+
+long	XMM_DisableA20();
+
+Returns:	0L	Success
+		< 0	Error code in top 8 bits
+
+--------------------------------------------------------------------------------
+
+long	XMM_QueryA20();
+
+Returns:	1L	Success, A20 is enabled
+		0L	Success, A20 is disabled
+		< 0	Error code in top 8 bits
+
+--------------------------------------------------------------------------------
+
+long	XMM_QueryLargestFree();
+
+Returns:	>= 0L	Success, return is size of largest free block
+		< 0	Error code is in the top 8 bits of the return value
+
+--------------------------------------------------------------------------------
+
+long	XMM_QueryTotalFree();
+
+Returns:	>= 0L	Success, return is total amount of free extended memory
+		< 0	Error code is in the top 8 bits of the return value
+
+--------------------------------------------------------------------------------
+
+long	XMM_AllocateExtended(SizeK);
+unsigned SizeK;
+
+Parameters:	SizeK is the size of the block requested in Kb
+
+Returns:	>= 0L	Success, the low word is the handle for the block
+		< 0	Error code is in the top 8 bits of the return value
+
+--------------------------------------------------------------------------------
+
+long	XMM_FreeExtended(Handle);
+unsigned Handle;
+
+Parameters:	Handle is the handle corresponding to the extended memory
+		block to be freed
+
+Returns:	0L	Success
+		< 0	Error code in top 8 bits
+
+--------------------------------------------------------------------------------
+
+long	XMM_MoveExtended(pMoveDescription);
+struct XMM_Move *pMoveDescription;
+
+Parameters:	pMoveDescription is a pointer to a structure as defined
+		in the XMS.  XMM_Move is defined in XMM.H
+
+Returns:	0L	Success
+		< 0	Error code in top 8 bits
+
+--------------------------------------------------------------------------------
+
+long	XMM_LockExtended(Handle);
+unsigned Handle;
+
+Parameters:	Handle is the handle corresponding to the extended memory
+		block to be locked
+
+Returns:	> 0	Success, value is the physical address of the memory
+		< 0	Error code in top 8 bits
+
+NOTE:	This interface only allows 31 bits of physical address.
+
+--------------------------------------------------------------------------------
+
+long	XMM_UnLockExtended(Handle);
+unsigned Handle;
+
+Parameters:	Handle is the handle corresponding to the extended memory
+		block to be unlocked
+
+Returns:	0L	Success
+		< 0	Error code in top 8 bits
+
+--------------------------------------------------------------------------------
+
+long	XMM_GetHandleLength(Handle);
+unsigned Handle;
+
+Parameters:	Handle is the handle corresponding to the extended memory
+		block for which the length is required
+
+Returns:	> 0	Success, the return value is the length of the
+			block in Kb
+		< 0	Error code in top 8 bits
+
+--------------------------------------------------------------------------------
+
+long	XMM_GetHandleInfo(Handle);
+unsigned Handle;
+
+Parameters:	Handle is the handle corresponding to the extended memory
+		block for which the information is required
+
+Returns:	> 0	Success, the low byte (bits 7:0) contains the
+			number of free EMB handles in the system, bits 15:8 
+			contain the lock count for the handle
+		< 0	Error code in top 8 bits
+
+--------------------------------------------------------------------------------
+
+long	XMM_ReallocateExtended(Handle, NewSizeK);
+unsigned NewSizeK;
+
+Parameters:	Handle is the handle which is to be reallocated
+		NewSizeK is the desired size in Kb
+
+Returns:	0L	Success
+		< 0	Error code in top 8 bits
+
+--------------------------------------------------------------------------------
+
+long	XMM_RequestUMB(SizeP);
+unsigned SizeP;
+
+Parameters:	SizeP is the size in paragraphs requested
+
+Returns:	> 0L	Success, low word (bits 15:0) contain the segment
+			of the upper memory block, high word (bits 30:16)
+			contains the actual size of the block
+		< 0L	Error code in the top 8 bits, size of the largest
+			available block in the low word (bits 15:0)
+
+--------------------------------------------------------------------------------
+
+long	XMM_ReleaseUMB(Segment);
+unsigned Segment;
+
+Parameters:	Segment of the upper memory block to be released
+
+Returns:	0L	Success
+		< 0	Error code in top 8 bits
+
+--------------------------------------------------------------------------------
+
+char	XMSERROR(x)
+long x;
+
+Parameters:	x is a return code from one of the XMM functions which
+		indicated an error
+
+Returns:	The error code is returned as a 'char'
+
+--------------------------------------------------------------------------------

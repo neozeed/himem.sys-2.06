@@ -1,0 +1,8 @@
+hitest.obj: hitest.asm
+    masm hitest;
+
+hitest.exe: hitest.obj
+    link hitest;
+
+hitest.com: hitest.exe
+    exe2bin hitest.exe hitest.com

@@ -1,0 +1,99 @@
+Information about this file, S12023.EXE (formerly XMS20.ARC)
+
+1989 March 21
+
+Copyright (c) 1988, 1989, Microsoft Corporation, Lotus Development
+Corporation, Intel Corporation, and AST Research, Inc. Refer to the 
+document "eXtended Memory Specification (XMS), ver 2.0" for HIMEM.SYS
+copyright and warranty information.
+
+This file contains the contents of the XMS distribution disk.
+However it is not the OFFICIAL XMS distribution disk. It does contain
+all of the files that the current XMS release disk does. The only
+item which this archive does not contain is the printed version of the
+file SPEC\XMS.TXT. In the domestic United States, to obtain the
+latest official XMS release disk, call Microsoft customer service at 
+(800)426-9400 and ask for a copy of the "XMS Specification and it's
+supplemental diskette." 
+
+This file, S12023.EXE, contains the following files:
+
+    README.TXT   general information: read this file first
+    HIMEM.SYS    the latest xms driver (v2.06)
+    \CLIB.ARC    c/masm library code
+    \OEMSRC.ARC  code for the latest himem.sys driver (v2.06)
+    \SPEC.ARC    xms and himem documentation
+    \TESTS.ARC   c and masm xms test code
+
+
+    \README.TXT
+    \HIMEM.SYS
+    \CLIB\XMM.LIB
+    \CLIB\XMM.ASM
+    \CLIB\XMM.H
+    \CLIB\CMACROS.INC
+    \CLIB\XMMLIB.DOC
+    \OEMSRC\XM386.ASM
+    \OEMSRC\XM286.ASM
+    \OEMSRC\HIMEM
+    \OEMSRC\HIMEM.ASM
+    \SPEC\XMS.TXT
+    \SPEC\HIMEM.TXT
+    \TESTS\XMSTIME.EXE
+    \TESTS\TEST
+    \TESTS\TEST.EXE
+    \TESTS\HITEST
+    \TESTS\HITEST.COM
+    \TESTS\HITEST.ASM
+    \TESTS\TEST.C
+
+See the file README.TXT for general information, SPEC\XMS.TXT for XMS
+programmer information, and SPEC\HIMEM.TXT for HIMEM.SYS user
+information.
+
+This file also includes the latest release of HIMEM.SYS, version
+2.06, released February 7, 1989. The following problems were found in
+the previous release of HIMEM.SYS and have been corrected in this
+release:
+
+1) When a program would call the XMM HIMEM.SYS to query the amount of
+free extended memory, HIMEM would incorrectly report back a value
+that is 64KB too large. HIMEM was not properly taking the 64KB High
+Memory Area (HMA) into its calculations of the size of free extended
+memory, which could cause a program to allocate an EMB on top of the
+HMA, causing data to be overwritten. This problem has been fixed in
+HIMEM.SYS Version 2.06.
+
+2) When using the command line option NUMHANDLES with the value of 0,
+the driver would hang. This problem has been fixed in HIMEM.SYS 
+Version 2.06.
+
+3) The minor version returned by HIMEM.SYS (the version of the XMM,
+as opposed to the version of the XMS the driver is based on), was
+incorrectly returning 2.03. It now returns 2.06. This problem has
+been fixed in HIMEM.SYS Version 2.06.
+
+4) On a 80286 system, EMBs were not being properly accessed due to
+the 80286 move procedure not being properly initialized. This 
+problem has been fixed in HIMEM.SYS Version 2.06.
+
+5) The HIMEM.SYS source code located in the OEMSRC subdirectory on
+the XMS Distribution Diskette will now produce a binary-identical
+copy of HIMEM.SYS, which was built using using Microsoft Macro
+Assembler (MASM) 5.10. Previous versions of the source code did not
+build an exact copy of the distributed copy of HIMEM.SYS. This
+problem has been fixed in HIMEM.SYS Version 2.06.
+
+Note that the HIMEM user documentation (HIMEM.TXT) as well as the XMS
+programmer documentation (XMS.TXT, included with the XMS distribution
+disk) both state that VDISK.SYS is not compatible with HIMEM.SYS.
+This is no longer completely true. The VDISK.SYS that is shipped with
+IBM PC-DOS 4.00 is compatible with HIMEM.SYS, since it uses a
+compatible method of allocating extended memory. This is a
+documentation errata, not a change in HIMEM.SYS 2.06.
+
+Some users may not need all of this programmer-oriented information,
+and may instead want to obtain the just the latest HIMEM.SYS driver,
+in the file S12137.EXE. (formerly HIMEM206.ARC)  This file contains
+the latest version of HIMEM.SYS 2.06, and the user documentation for
+this device driver. However, this is also included in this file.
